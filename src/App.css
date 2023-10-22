@@ -51,13 +51,14 @@
 .search-box img {
   width: 2rem;
 }
-
+/* list */
 .music-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   padding: 1rem;
   justify-items: center;
+  background-color: #fff;
 }
 
 .music-list-item {

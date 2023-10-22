@@ -1,12 +1,16 @@
 
-export default function(){
-    const musics = [0,2,1,2,2]
+export default function(arg:{musics:MusicMvMeta[]}){
+    const {musics} = arg;
+    const timeFormat = (t:number)=>{
+        const s = Math.round(t/1000);
+        return Math.floor(s/60)+':'+(s%60)
+    }
     return <div className="music-list">
-        {musics.map(()=><div className="music-list-item" style={{backgroundImage:'url(http://p1.music.126.net/S8InCa4o-pFJszhUvI-NPQ==/3247957351196805.jp)'}}>
+        {musics.map((m)=><div className="music-list-item" key={m.id} style={{backgroundImage:`url(${m.cover})`}}>
             <p className="time">
-                <span>02:12</span>
+                <span>{timeFormat(m.duration)}</span>
             </p>
-            <p className="title">海阔天空</p>
+            <p className="title">{m.name}</p>
         </div>)}
     </div>
 }
