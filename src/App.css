@@ -63,7 +63,7 @@
 
 .music-list-item {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
   background-repeat: no-repeat;
@@ -86,7 +86,7 @@
   background: rgba(0, 0, 0, 0.308);
   width: 100%;
   color: #fff;
-  padding: 1rem;
+  padding: 0.2rem 0.5rem;
 }
 /* controller */
 .controller {
