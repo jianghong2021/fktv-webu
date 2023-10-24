@@ -29,9 +29,12 @@
 
 .search-box {
   padding: 1rem;
-
+  position: sticky;
+  top: 0;
+  background-color: #fff;
 }
 
+/* search */
 .search-box>div {
   display: flex;
   align-items: center;
@@ -51,6 +54,7 @@
 .search-box img {
   width: 2rem;
 }
+
 /* list */
 .music-list {
   display: grid;
@@ -71,23 +75,43 @@
   width: 100%;
   text-align: center;
   gap: 4rem;
+  background-position: center;
+  max-width: calc(50vw - 2rem);
+  border-radius: 0.5rem;
 }
 
 .music-list-item img {
   position: absolute;
 }
-.music-list-item .time{
+
+.music-list-item .time {
   width: 100%;
   text-align: right;
   color: #fff;
   padding: 0.5rem;
 }
-.music-list-item .title{
+
+.music-list-item .title-box {
   background: rgba(0, 0, 0, 0.308);
   width: 100%;
   color: #fff;
   padding: 0.2rem 0.5rem;
 }
+
+.music-list-item .name {
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.music-list-item .title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
 /* controller */
 .controller {
   position: fixed;
@@ -115,7 +139,7 @@
 }
 
 /* my-list */
-.my-list{
+.my-list {
   position: fixed;
   background: #fff;
   width: 100%;
@@ -124,16 +148,72 @@
   padding: 1rem;
   transition: all 0.6s;
 }
-.my-list-hide{
+
+.my-list-hide {
   transform: translateY(-100%);
 }
-.my-list>div{
+
+.my-list>div {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 0;
 }
-.my-list>div img{
+
+.my-list>div img {
   width: 2rem;
   height: 2rem;
+}
+
+.category-box {
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  padding: 0.2rem;
+}
+
+/* loading */
+.loading-screen{
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-screen img{
+  animation: loading-screen 3s infinite linear;
+}
+
+@keyframes loading-screen {
+  0%{
+    transform: rotate(0);
+  }
+  0%{
+    transform: rotate(-360deg);
+  }
+}
+
+.notice-layer{
+  position: fixed;
+  z-index: 101;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notice-layer div{
+  padding: 1rem;
+  border-radius: 0.4rem;
+  background-color: #fff;
 }

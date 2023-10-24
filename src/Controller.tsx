@@ -5,7 +5,7 @@ export default function () {
     const onShowList = () => {
         setShowList(!showList);
     }
-    const list = [1, 2, 3, 5, 1]
+    const list = [1, 2, 3, 5, 0]
     return <>
         <div className="controller">
             <span className={showList ? 'active' : ''} onClick={onShowList}>歌单</span>
@@ -13,7 +13,7 @@ export default function () {
             <span>静音</span>
         </div>
         <div className={(!showList ? 'my-list-hide' : '') + ' my-list'}>
-            {list.map(() => <div>
+            {list.map((i) => <div key={i}>
                 <span>海阔天空</span>
                 <img src="/delete.png" alt="delete" />
             </div>)}

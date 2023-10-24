@@ -9,7 +9,9 @@ interface MusicMvMeta {
     "playCount": number
     "artistId": number
     "duration": number
+    artistName: string
     "artists": ArtistsMeta[]
+    url: string
 }
 
 interface MvAllQuery {
