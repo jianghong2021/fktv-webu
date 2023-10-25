@@ -4,4 +4,16 @@ export default class PlayerClient{
     static addMusic(m:MusicMvMeta){
         return client.post('/api/add',m)
     }
+    static list(){
+        return client.get<MusicMvMeta[]>('/api/list')
+    }
+    static next(){
+        return client.get('/api/next')
+    }
+    static pause(){
+        return client.get('/api/pause')
+    }
+    static remove(id:number){
+        return client.delete('/api/remove?id='+id)
+    }
 }

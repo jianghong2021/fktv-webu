@@ -1,4 +1,4 @@
-import { useEffect, useState,useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 
 import './App.css'
 import SearchBox from './SearchBox'
@@ -11,31 +11,32 @@ import Notice from './componments/Notice'
 
 function App() {
   const [musics, setMusics] = useState(Array<MusicMvMeta>)
-  const [loading,setLoading] = useState(false)
-  const [notice,setNotice] = useState({txt:'',show:false})
-  const query = {
+  const [loading, setLoading] = useState(false)
+  const [notice, setNotice] = useState({ txt: '', show: false })
+  const [mvCount, setmvCount] = useState(0)
+  const [query,setQuery] = useState({
     keywords: '刘德华',
     type: 1004,
     limit: 30,
     offset: 1
-  }
-  let closeNoticeTimer:any;
-  const showNotice = (txt:string)=>{
+  })
+  let closeNoticeTimer: any;
+  const showNotice = (txt: string) => {
     clearTimeout(closeNoticeTimer)
     setNotice({
-      txt:txt,
-      show:true
+      txt: txt,
+      show: true
     })
-    closeNoticeTimer = setTimeout(()=>{
+    closeNoticeTimer = setTimeout(() => {
       setNotice({
-        txt:'',
-        show:false
+        txt: '',
+        show: false
       })
-    },2000)
+    }, 1500)
   }
   let loadAllState = false
   const loadAll = async () => {
-    if(loadAllState){
+    if (loadAllState) {
       return
     }
     setLoading(true)
@@ -52,32 +53,51 @@ function App() {
   }
   useEffect(() => {
     loadAll()
-    return ()=>{
+    return () => {
       loadAllState = true
     }
   }, [window.location.hash])
-
-  const search = async (s:string) => {
-    query.keywords = s;
+  const search = async (more?: boolean) => {
+    if(more){
+      query.offset++
+    }else{
+      query.offset = 1
+    }
+    console.log(musics)
+    setQuery(query)
     setLoading(true)
-    const res = await MusicApi.search(query).catch(err=>{
+    const res = await MusicApi.search(query).catch(err => {
       showNotice('搜索失败，请稍后再试')
     })
     setLoading(false)
-    const mvs = res&&res.data.result.mvs?res.data.result.mvs:[]
-    mvs.length>0 && setMusics(query.offset==1?mvs:musics.concat(mvs))
+    if (!res) {
+      return
+    }
+    setmvCount(res.data.result.mvCount)
+    const mvs = res && res.data.result.mvs ? res.data.result.mvs : []
+    if (more) {
+      
+      setMusics(musics.concat(mvs))
+    } else {
+      setMusics(mvs)
+    }
   }
-  const setQueryType = (t:number)=>{
+  const setQueryKeywords = (s: string) => {
+    query.keywords = s
+    setQuery(query)
+   
+  }
+  const setQueryType = (t: number) => {
     query.type = t;
   }
   return (
     <div className='warp'>
-      <Notice txt={notice.txt} show={notice.show}/>
-      <Loading loading={loading}/>
-      <SearchBox search={search}/>
-      <Category setQueryType={setQueryType}/>
-      <Musics musics={musics} setLoading={setLoading} showNotice={showNotice}/>
-      <Controller />
+      <Notice txt={notice.txt} show={notice.show} />
+      <Loading loading={loading} />
+      <SearchBox search={search} setQueryKeywords={setQueryKeywords} />
+      {/* <Category setQueryType={setQueryType}/> */}
+      <Musics mvCount={mvCount} musics={musics} setLoading={setLoading} showNotice={showNotice} search={search} />
+      <Controller setLoading={setLoading} showNotice={showNotice} />
     </div>
   )
 }

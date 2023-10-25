@@ -89,6 +89,8 @@
   text-align: right;
   color: #fff;
   padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.308);
+  width: 100%;
 }
 
 .music-list-item .title-box {
@@ -112,9 +114,23 @@
   width: 100%;
 }
 
+.load-more{
+  text-align: center;
+  width: 100%;
+  
+}
+.load-more span{
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background-color: #9564ff;
+  color: #fff;
+  border-radius: 0.4rem;
+}
+
 /* controller */
 .controller {
   position: fixed;
+  z-index: 100;
   width: 100%;
   left: 0;
   bottom: 0;
@@ -141,12 +157,18 @@
 /* my-list */
 .my-list {
   position: fixed;
+  z-index: 90;
   background: #fff;
   width: 100%;
   top: 0;
   left: 0;
   padding: 1rem;
-  transition: all 0.6s;
+  transition: all 0.4s;
+  height: 100vh;
+  box-sizing: border-box;
+  padding-bottom: 6rem;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .my-list-hide {
@@ -158,6 +180,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .my-list>div img {
