@@ -1,7 +1,8 @@
 import client from "./http";
 export default class MusicApi {
     static search(q: MvSearchQuery) {
-        return client.get<{ result: { mvCount: number, mvs?: MusicMvMeta[] } }>('/search', { params: q })
+        const query = {...q}
+        return client.get<{ result: { mvCount: number, mvs?: MusicMvMeta[] } }>('/search', { params: query })
     }
     static all(q: MvAllQuery) {
         return client.get<MusicMvMeta[]>('/mv/all', { params: q })

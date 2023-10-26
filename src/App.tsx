@@ -1,11 +1,11 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
 import SearchBox from './SearchBox'
 import Musics from './Musics'
 import Controller from './Controller'
 import MusicApi from './service/music'
-import { Category } from './componments/Category'
+// import { Category } from './componments/Category'
 import Loading from './componments/Loading'
 import Notice from './componments/Notice'
 
@@ -16,7 +16,7 @@ function App() {
   const [mvCount, setmvCount] = useState(0)
   const [query,setQuery] = useState({
     keywords: '刘德华',
-    type: 1004,
+    type: 1,
     limit: 30,
     offset: 1
   })
@@ -45,7 +45,7 @@ function App() {
       offset: 1,
       type: '全部',
       area: '港台'
-    }).catch(err => {
+    }).catch(() => {
       showNotice('加载失败，请稍后试')
     })
     setLoading(false)
@@ -63,11 +63,12 @@ function App() {
     }else{
       query.offset = 1
     }
-    console.log(musics)
+
     setQuery(query)
     setLoading(true)
-    const res = await MusicApi.search(query).catch(err => {
+    const res = await MusicApi.search(query).catch((e) => {
       showNotice('搜索失败，请稍后再试')
+      console.log(e)
     })
     setLoading(false)
     if (!res) {
@@ -87,9 +88,9 @@ function App() {
     setQuery(query)
    
   }
-  const setQueryType = (t: number) => {
-    query.type = t;
-  }
+  // const setQueryType = (t: number) => {
+  //   query.type = t;
+  // }
   return (
     <div className='warp'>
       <Notice txt={notice.txt} show={notice.show} />

@@ -3,7 +3,7 @@ import { getQueryParam } from "../utils/com"
 const client = axios.create()
 client.interceptors.request.use((conf)=>{
     const host = getQueryParam('host')
-    conf.baseURL = host?`http://${host}:8848/`:''
+    conf.baseURL = host?`http://${host}:8848`:''
     return conf
 })
 client.interceptors.response.use((res) => {

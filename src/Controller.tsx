@@ -3,7 +3,7 @@ import PlayerClient from "./service/player-client";
 
 export default function (opt:{setLoading:(l:boolean)=>void,showNotice:(t:string)=>void}) {
     let doing = false
-    const {setLoading,showNotice} = opt
+    const {showNotice} = opt
     const [showList, setShowList] = useState(false);
     const onShowList = () => {
         !showList&&loadList()
@@ -14,7 +14,7 @@ export default function (opt:{setLoading:(l:boolean)=>void,showNotice:(t:string)
     const loadList = ()=>{
         PlayerClient.list().then(res=>{
             setList(res.data);
-        }).catch((e)=>{
+        }).catch(()=>{
             showNotice('加载失败')
         })
     }
