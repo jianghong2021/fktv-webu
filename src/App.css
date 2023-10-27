@@ -45,6 +45,11 @@
   padding: 0.2rem;
 }
 
+.search-box select {
+  outline: none;
+  border: none;
+}
+
 .search-box input {
   padding: 0.4rem 0.5rem;
   width: calc(100% - 2rem);
@@ -127,7 +132,7 @@
 }
 
 /* loading */
-.loading-screen{
+.loading-screen {
   position: fixed;
   z-index: 100;
   left: 0;
@@ -140,20 +145,21 @@
   align-items: center;
 }
 
-.loading-screen img{
+.loading-screen img {
   animation: loading-screen 3s infinite linear;
 }
 
 @keyframes loading-screen {
-  0%{
+  0% {
     transform: rotate(0);
   }
-  0%{
+
+  0% {
     transform: rotate(-360deg);
   }
 }
 
-.notice-layer{
+.notice-layer {
   position: fixed;
   z-index: 101;
   left: 0;
@@ -166,7 +172,7 @@
   align-items: center;
 }
 
-.notice-layer div{
+.notice-layer div {
   padding: 1rem;
   border-radius: 0.4rem;
   background-color: #fff;

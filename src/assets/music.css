@@ -1,5 +1,5 @@
 /* list */
-.mv .music-list {
+.mv, .music-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
@@ -66,7 +66,7 @@
 .load-more span {
     display: inline-block;
     padding: 0.4rem 1rem;
-    background-color: #9564ff;
+    background-color: #747bff;
     color: #fff;
     border-radius: 0.4rem;
 }

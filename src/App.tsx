@@ -5,7 +5,6 @@ import SearchBox from './SearchBox'
 import Musics from './Musics'
 import Controller from './Controller'
 import MusicApi from './service/music'
-import { Category } from './componments/Category'
 import Loading from './componments/Loading'
 import Notice from './componments/Notice'
 import { SEARCH_TYPE } from './utils/com'
@@ -15,7 +14,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [notice, setNotice] = useState({ txt: '', show: false })
   const [mvCount, setmvCount] = useState(0)
-  const [hots, setHots] = useState(Array<HotsWords>)
+  const [, setHots] = useState(Array<HotsWords>)
   const [query, setQuery] = useState({
     keywords: '刘德华',
     type: SEARCH_TYPE.Single,
@@ -59,6 +58,8 @@ function App() {
       query.offset++
     } else {
       query.offset = 1
+      setmvCount(0)
+      setMusics([])
     }
 
     setQuery(query)
@@ -100,10 +101,9 @@ function App() {
     <div className='warp'>
       <Notice txt={notice.txt} show={notice.show} />
       <Loading loading={loading} />
-      <SearchBox search={search} setQueryKeywords={setQueryKeywords} />
-      <Category setQueryType={setQueryType} />
+      <SearchBox search={search} setQueryKeywords={setQueryKeywords} setQueryType={setQueryType}/>
       <Musics mType={query.type} mvCount={mvCount} musics={musics} setLoading={setLoading} showNotice={showNotice} search={search} />
-      {/* <Controller setLoading={setLoading} showNotice={showNotice} /> */}
+      <Controller setLoading={setLoading} showNotice={showNotice} />
     </div>
   )
 }
