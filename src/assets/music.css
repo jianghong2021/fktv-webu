@@ -1,0 +1,128 @@
+/* list */
+.mv .music-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+    justify-items: center;
+    background-color: #fff;
+}
+
+.mv .music-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    text-align: center;
+    gap: 4rem;
+    background-position: center;
+    max-width: calc(50vw - 2rem);
+    border-radius: 0.5rem;
+}
+
+.mv .music-list-item img {
+    position: absolute;
+}
+
+.mv .music-list-item .time {
+    width: 100%;
+    text-align: right;
+    color: #fff;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.308);
+    width: 100%;
+}
+
+.mv .music-list-item .title-box {
+    background: rgba(0, 0, 0, 0.308);
+    width: 100%;
+    color: #fff;
+    padding: 0.2rem 0.5rem;
+}
+
+.mv .music-list-item .name {
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mv .music-list-item .title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.load-more {
+    text-align: center;
+    width: 100%;
+
+}
+
+.load-more span {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background-color: #9564ff;
+    color: #fff;
+    border-radius: 0.4rem;
+}
+
+.single {
+    display: block;
+    background-color: #fff;
+}
+
+.single .music-list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    align-items: center;
+}
+
+.single .title {
+    color: rgb(54, 54, 54);
+    font-weight: bold;
+}
+
+.single .name {
+    color: rgb(141 141 141);
+    font-size: 0.9rem;
+}
+
+.single .time {
+    color: rgb(141 141 141);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.single .time img {
+    width: 1rem;
+    height: 1rem;
+}
+
+.single .contr img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.single .contr span {
+    font-size: 0.8rem;
+    white-space: nowrap;
+    color: #a59d9d;
+}
+
+.single .title-box {
+    width: calc(100% - 3rem);
+}
+
+.single .title-box p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

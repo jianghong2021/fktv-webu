@@ -5,18 +5,20 @@ import SearchBox from './SearchBox'
 import Musics from './Musics'
 import Controller from './Controller'
 import MusicApi from './service/music'
-// import { Category } from './componments/Category'
+import { Category } from './componments/Category'
 import Loading from './componments/Loading'
 import Notice from './componments/Notice'
+import { SEARCH_TYPE } from './utils/com'
 
 function App() {
   const [musics, setMusics] = useState(Array<MusicMvMeta>)
   const [loading, setLoading] = useState(false)
   const [notice, setNotice] = useState({ txt: '', show: false })
   const [mvCount, setmvCount] = useState(0)
-  const [query,setQuery] = useState({
+  const [hots, setHots] = useState(Array<HotsWords>)
+  const [query, setQuery] = useState({
     keywords: '刘德华',
-    type: 1,
+    type: SEARCH_TYPE.Single,
     limit: 30,
     offset: 1
   })
@@ -35,32 +37,27 @@ function App() {
     }, 1500)
   }
   let loadAllState = false
-  const loadAll = async () => {
+  const loadSearchHots = async () => {
     if (loadAllState) {
       return
     }
     setLoading(true)
-    const res = await MusicApi.all({
-      limit: 30,
-      offset: 1,
-      type: '全部',
-      area: '港台'
-    }).catch(() => {
+    const res = await MusicApi.hots().catch(() => {
       showNotice('加载失败，请稍后试')
     })
     setLoading(false)
-    res && setMusics(res.data);
+    res && setHots(res.data.result.hots);
   }
   useEffect(() => {
-    loadAll()
+    loadSearchHots()
     return () => {
       loadAllState = true
     }
   }, [window.location.hash])
   const search = async (more?: boolean) => {
-    if(more){
+    if (more) {
       query.offset++
-    }else{
+    } else {
       query.offset = 1
     }
 
@@ -74,10 +71,17 @@ function App() {
     if (!res) {
       return
     }
-    setmvCount(res.data.result.mvCount)
-    const mvs = res && res.data.result.mvs ? res.data.result.mvs : []
+    let mvs = []
+    if (query.type == SEARCH_TYPE.Single) {
+      setmvCount(Number(res.data.result.songCount))
+      mvs = res && res.data.result.songs ? res.data.result.songs : []
+    } else {
+      setmvCount(Number(res.data.result.mvCount))
+      mvs = res && res.data.result.mvs ? res.data.result.mvs : []
+    }
+
     if (more) {
-      
+
       setMusics(musics.concat(mvs))
     } else {
       setMusics(mvs)
@@ -86,19 +90,20 @@ function App() {
   const setQueryKeywords = (s: string) => {
     query.keywords = s
     setQuery(query)
-   
+
   }
-  // const setQueryType = (t: number) => {
-  //   query.type = t;
-  // }
+  const setQueryType = (t: number) => {
+    query.type = t;
+    setQuery(query)
+  }
   return (
     <div className='warp'>
       <Notice txt={notice.txt} show={notice.show} />
       <Loading loading={loading} />
       <SearchBox search={search} setQueryKeywords={setQueryKeywords} />
-      {/* <Category setQueryType={setQueryType}/> */}
-      <Musics mvCount={mvCount} musics={musics} setLoading={setLoading} showNotice={showNotice} search={search} />
-      <Controller setLoading={setLoading} showNotice={showNotice} />
+      <Category setQueryType={setQueryType} />
+      <Musics mType={query.type} mvCount={mvCount} musics={musics} setLoading={setLoading} showNotice={showNotice} search={search} />
+      {/* <Controller setLoading={setLoading} showNotice={showNotice} /> */}
     </div>
   )
 }

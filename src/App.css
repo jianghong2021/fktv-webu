@@ -24,7 +24,8 @@
 
 .warp {
   width: 100vw;
-  height: 100svh;
+  min-height: 100svh;
+  color: #000;
 }
 
 .search-box {
@@ -53,78 +54,6 @@
 
 .search-box img {
   width: 2rem;
-}
-
-/* list */
-.music-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  padding: 1rem;
-  justify-items: center;
-  background-color: #fff;
-}
-
-.music-list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 100%;
-  text-align: center;
-  gap: 4rem;
-  background-position: center;
-  max-width: calc(50vw - 2rem);
-  border-radius: 0.5rem;
-}
-
-.music-list-item img {
-  position: absolute;
-}
-
-.music-list-item .time {
-  width: 100%;
-  text-align: right;
-  color: #fff;
-  padding: 0.5rem;
-  background: rgba(0, 0, 0, 0.308);
-  width: 100%;
-}
-
-.music-list-item .title-box {
-  background: rgba(0, 0, 0, 0.308);
-  width: 100%;
-  color: #fff;
-  padding: 0.2rem 0.5rem;
-}
-
-.music-list-item .name {
-  font-weight: bold;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.music-list-item .title {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  width: 100%;
-}
-
-.load-more{
-  text-align: center;
-  width: 100%;
-  
-}
-.load-more span{
-  display: inline-block;
-  padding: 0.4rem 1rem;
-  background-color: #9564ff;
-  color: #fff;
-  border-radius: 0.4rem;
 }
 
 /* controller */

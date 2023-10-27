@@ -1,8 +1,11 @@
 import MusicApi from "./service/music";
 import PlayerClient from "./service/player-client";
+import { SEARCH_TYPE } from "./utils/com";
+import './assets/music.css'
 
-export default function (arg: { mvCount: number, musics: MusicMvMeta[], search: (m?: boolean) => void, setLoading: (a: boolean) => void, showNotice: (t: string) => void }) {
-    const { mvCount, musics, search, setLoading, showNotice } = arg;
+// eslint-disable-next-line react-refresh/only-export-components
+export default function (arg: { mType: SEARCH_TYPE, mvCount: number, musics: MusicMvMeta[], search: (m?: boolean) => void, setLoading: (a: boolean) => void, showNotice: (t: string) => void }) {
+    const { mType, mvCount, musics, search, setLoading, showNotice } = arg
     const timeFormat = (t: number) => {
         const s = Math.round(t / 1000);
         return Math.floor(s / 60) + ':' + (s % 60)
@@ -10,8 +13,8 @@ export default function (arg: { mvCount: number, musics: MusicMvMeta[], search: 
     const addMusic = async (m: MusicMvMeta) => {
         setLoading(true)
         try {
-
-            const res = await MusicApi.getUrl(m.id).catch(() => {
+            const mid = m.mvid ? m.mvid : m.id
+            const res = await MusicApi.getUrl(mid).catch(() => {
 
             })
             if (res) {
@@ -27,18 +30,35 @@ export default function (arg: { mvCount: number, musics: MusicMvMeta[], search: 
         }
         setLoading(false)
     }
-    return <div style={{paddingBottom: '6rem'}}>
-        <div className="music-list">
-        {musics.map((m, i) => <div className="music-list-item" key={i} style={{ backgroundImage: `url(${m.cover})` }} onClick={() => addMusic(m)}>
-            <p className="time">
-                <span>{timeFormat(m.duration)}</span>
-            </p>
-            <div className="title-box">
-                <p className="name">{m.artistName}</p>
-                <p className="title">{m.name}</p>
-            </div>
+    const getNames = (ar: ArtistsMeta[]) => {
+        return ar.map(u => u.name)
+    }
+    return <div style={{ paddingBottom: '6rem' }}>
+        <div className={"music-list " + (mType == SEARCH_TYPE.Single ? 'single' : 'mv')}>
+            {mType == SEARCH_TYPE.MV && musics.map((m, i) => <div className="music-list-item" key={i} style={{ backgroundImage: `url(${m.cover})` }} onClick={() => addMusic(m)}>
+                <p className="time">
+                    <span>{timeFormat(m.duration)}</span>
+                </p>
+                <div className="title-box">
+                    <p className="name">{m.artistName}</p>
+                    <p className="title">{m.name}</p>
+                </div>
 
-        </div>)}
+            </div>)}
+            {mType == SEARCH_TYPE.Single && musics.map((m, i) => <div className="music-list-item" key={i}>
+                <div className="title-box">
+                    <p className="title">{m.name}</p>
+                    <p className="name">{getNames(m.artists).join('/')}</p>
+                    <p className="time">
+                        <span>{timeFormat(m.duration)}</span>
+                        {m.mvid ? <img src="/video.svg" alt="mv" /> : null}
+                    </p>
+                </div>
+                <div className="contr">
+                    {m.mvid?<img src="/add.svg" alt="add" onClick={() => addMusic(m)} />:<span>无资源</span>}
+                    
+                </div>
+            </div>)}
 
         </div>
         <p className="load-more" style={{ display: mvCount > musics.length ? 'block' : 'none' }}>
