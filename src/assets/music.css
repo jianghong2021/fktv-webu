@@ -126,3 +126,8 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.empty-block{
+    text-align: center;
+    width: 100%;
+    color: #a5a5a5;
+}

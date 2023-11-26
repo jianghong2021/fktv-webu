@@ -35,32 +35,6 @@
   background-color: #fff;
 }
 
-/* search */
-.search-box>div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: solid 1px #d9d9d9;
-  border-radius: 0.4rem;
-  padding: 0.2rem;
-}
-
-.search-box select {
-  outline: none;
-  border: none;
-}
-
-.search-box input {
-  padding: 0.4rem 0.5rem;
-  width: calc(100% - 2rem);
-  border: none;
-  outline: none;
-}
-
-.search-box img {
-  width: 2rem;
-}
-
 /* controller */
 .controller {
   position: fixed;

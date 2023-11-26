@@ -14,10 +14,9 @@ export default function (arg: { mType: SEARCH_TYPE, mvCount: number, musics: Mus
         setLoading(true)
         try {
             const mid = m.mvid ? m.mvid : m.id
-            const res = await MusicApi.getUrl(mid).catch(() => {
-
-            })
+            const res = await MusicApi.getUrl(mid)
             if (res) {
+                m.cover = ''
                 m.url = res.data.url
                 await PlayerClient.addMusic(m)
                 showNotice('添加成功')
@@ -59,8 +58,9 @@ export default function (arg: { mType: SEARCH_TYPE, mvCount: number, musics: Mus
                     
                 </div>
             </div>)}
-
+            {musics.length==0?<p className="empty-block">什么也没有</p>:null}
         </div>
+        
         <p className="load-more" style={{ display: mvCount > musics.length ? 'block' : 'none' }}>
             <span onClick={() => search(true)}>点击加载</span>
         </p>

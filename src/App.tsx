@@ -47,12 +47,12 @@ function App() {
     setLoading(false)
     res && setHots(res.data.result.hots);
   }
-  useEffect(() => {
-    loadSearchHots()
-    return () => {
-      loadAllState = true
-    }
-  }, [window.location.hash])
+  // useEffect(() => {
+  //   loadSearchHots()
+  //   return () => {
+  //     loadAllState = true
+  //   }
+  // }, [window.location.hash])
   const search = async (more?: boolean) => {
     if (more) {
       query.offset++
