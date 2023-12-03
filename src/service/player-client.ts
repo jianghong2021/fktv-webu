@@ -10,8 +10,11 @@ export default class PlayerClient{
     static next(){
         return client.get('/api/next')
     }
-    static pause(){
-        return client.get('/api/pause')
+    static pause(pause:boolean){
+        return client.get('/api/pause?state='+(pause?'0':'1'))
+    }
+    static volume(volume:number){
+        return client.get('/api/mute?volume='+volume)
     }
     static remove(id:number){
         return client.delete('/api/remove?id='+id)

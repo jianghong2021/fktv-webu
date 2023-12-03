@@ -13,6 +13,7 @@ interface MusicMvMeta {
     artists: ArtistsMeta[]
     url: string
     mvid?: number
+    isVideo: boolean
 }
 
 interface MvAllQuery {

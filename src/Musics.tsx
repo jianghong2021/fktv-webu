@@ -10,18 +10,33 @@ export default function (arg: { mType: SEARCH_TYPE, mvCount: number, musics: Mus
         const s = Math.round(t / 1000);
         return Math.floor(s / 60) + ':' + (s % 60)
     }
-    const addMusic = async (m: MusicMvMeta) => {
+    const addMusic = async (m: MusicMvMeta, mv = true) => {
         setLoading(true)
         try {
-            const mid = m.mvid ? m.mvid : m.id
-            const res = await MusicApi.getUrl(mid)
-            if (res) {
-                m.cover = ''
-                m.url = res.data.url
-                await PlayerClient.addMusic(m)
-                showNotice('添加成功')
+            // 单曲
+            if (mv===false) {
+
+                const res = await MusicApi.getSongsUrl(m.id)
+                if (res && res.data[0]) {
+                    m.cover = ''
+                    m.url = res.data[0].url
+                    m.isVideo = mv
+                    await PlayerClient.addMusic(m)
+                    showNotice('添加成功')
+                } else {
+                    showNotice('无可用资源')
+                }
             } else {
-                showNotice('获取资源失败')
+                const res = await MusicApi.getUrl(m.id)
+                if (res) {
+                    m.cover = ''
+                    m.isVideo = mv
+                    m.url = res.data.url
+                    await PlayerClient.addMusic(m)
+                    showNotice('添加成功')
+                } else {
+                    showNotice('无可用资源')
+                }
             }
 
         } catch (error) {
@@ -54,13 +69,12 @@ export default function (arg: { mType: SEARCH_TYPE, mvCount: number, musics: Mus
                     </p>
                 </div>
                 <div className="contr">
-                    {m.mvid?<img src="/add.svg" alt="add" onClick={() => addMusic(m)} />:<span>无资源</span>}
-                    
+                    <img src="/add.svg" alt="add" onClick={() => addMusic(m, false)} />
                 </div>
             </div>)}
-            {musics.length==0?<p className="empty-block">什么也没有</p>:null}
+            {musics.length == 0 ? <p className="empty-block">什么也没有</p> : null}
         </div>
-        
+
         <p className="load-more" style={{ display: mvCount > musics.length ? 'block' : 'none' }}>
             <span onClick={() => search(true)}>点击加载</span>
         </p>

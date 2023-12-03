@@ -1,65 +1,65 @@
 import { useState } from "react";
 import PlayerClient from "./service/player-client";
 
-export default function (opt:{setLoading:(l:boolean)=>void,showNotice:(t:string)=>void}) {
+export default function (opt: { setLoading: (l: boolean) => void, showNotice: (t: string) => void }) {
     let doing = false
-    const {showNotice} = opt
+    const { showNotice } = opt
     const [showList, setShowList] = useState(false);
     const onShowList = () => {
-        !showList&&loadList()
+        !showList && loadList()
         setShowList(!showList);
-        
+
     }
-    const [list,setList] = useState(Array<MusicMvMeta>)
-    const loadList = ()=>{
-        PlayerClient.list().then(res=>{
+    const [list, setList] = useState(Array<MusicMvMeta>)
+    const loadList = () => {
+        PlayerClient.list().then(res => {
             setList(res.data);
-        }).catch(()=>{
+        }).catch(() => {
             showNotice('加载失败')
         })
     }
 
-    const nextSong = ()=>{
-        if(doing){
+    const nextSong = () => {
+        if (doing) {
             return
         }
         doing = true
-        PlayerClient.next().then(()=>{
+        PlayerClient.next().then(() => {
             showNotice('操作成功')
-        }).catch(()=>{
+        }).catch(() => {
             showNotice('操作失败')
-        }).finally(()=>{
+        }).finally(() => {
             doing = false
         })
     }
 
-    const removeSong = (m:MusicMvMeta)=>{
-        if(doing){
+    const removeSong = (m: MusicMvMeta) => {
+        if (doing) {
             return
         }
         doing = true
-        PlayerClient.remove(m.id).then(()=>{
+        PlayerClient.remove(m.id).then(() => {
             showNotice('操作成功')
             loadList()
-        }).catch(()=>{
+        }).catch(() => {
             showNotice('操作失败')
-        }).finally(()=>{
+        }).finally(() => {
             doing = false
         })
     }
 
-    const [pause,setPause] = useState(false)
-    const pausePlayer = ()=>{
-        if(doing){
+    const [pause, setPause] = useState(false)
+    const pausePlayer = () => {
+        if (doing) {
             return
         }
         doing = true
-        PlayerClient.pause().then(()=>{
+        PlayerClient.volume(doing ? 0 : 1).then(() => {
             setPause(!pause)
             showNotice('操作成功')
-        }).catch(()=>{
+        }).catch(() => {
             showNotice('操作失败')
-        }).finally(()=>{
+        }).finally(() => {
             doing = false
         })
     }
@@ -68,12 +68,15 @@ export default function (opt:{setLoading:(l:boolean)=>void,showNotice:(t:string)
         <div className="controller">
             <span className={showList ? 'active' : ''} onClick={onShowList}>歌单</span>
             <span onClick={nextSong}>切歌</span>
-            <span className={pause ? 'active' : ''} onClick={pausePlayer}>暂停</span>
+            <span className={pause ? 'active' : ''} onClick={pausePlayer}>静音</span>
         </div>
         <div className={(!showList ? 'my-list-hide' : '') + ' my-list'}>
             {list.map(m => <div key={m.id}>
-                <span>{m.name}</span>
-                <img src="/delete.png" alt="delete" onClick={()=>removeSong(m)}/>
+                <div className="my-list-item">
+                    {m.isVideo ? <img src="/video.svg" alt="video" /> : null}
+                    <span>{m.name}</span>
+                </div>
+                <img src="/delete.png" alt="delete" onClick={() => removeSong(m)} />
             </div>)}
 
         </div>

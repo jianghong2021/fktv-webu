@@ -61,7 +61,15 @@
 .controller .active {
   background-color: #822f40;
 }
-
+.my-list-item{
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.my-list-item img{
+  width: 1rem;
+  height: 1rem;
+}
 /* my-list */
 .my-list {
   position: fixed;
