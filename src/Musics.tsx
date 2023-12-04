@@ -19,7 +19,7 @@ export default function (arg: { mType: SEARCH_TYPE, mvCount: number, musics: Mus
 
                 const res = await MusicApi.getSongsUrl(m.id)
                 if (res && res.data[0]) {
-                    m.cover = ''
+                    m.cover = m.cover?m.cover:''
                     m.url = res.data[0].url
                     m.isVideo = mv
                     await PlayerClient.addMusic(m)
@@ -30,7 +30,7 @@ export default function (arg: { mType: SEARCH_TYPE, mvCount: number, musics: Mus
             } else {
                 const res = await MusicApi.getUrl(m.id)
                 if (res) {
-                    m.cover = ''
+                    m.cover = m.cover?m.cover:''
                     m.isVideo = mv
                     m.url = res.data.url
                     await PlayerClient.addMusic(m)
