@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import './App.css'
 import SearchBox from './SearchBox'
@@ -14,7 +14,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [notice, setNotice] = useState({ txt: '', show: false })
   const [mvCount, setmvCount] = useState(0)
-  const [, setHots] = useState(Array<HotsWords>)
+
   const [query, setQuery] = useState({
     keywords: '刘德华',
     type: SEARCH_TYPE.Single,
@@ -35,24 +35,7 @@ function App() {
       })
     }, 1500)
   }
-  let loadAllState = false
-  const loadSearchHots = async () => {
-    if (loadAllState) {
-      return
-    }
-    setLoading(true)
-    const res = await MusicApi.hots().catch(() => {
-      showNotice('加载失败，请稍后试')
-    })
-    setLoading(false)
-    res && setHots(res.data.result.hots);
-  }
-  // useEffect(() => {
-  //   loadSearchHots()
-  //   return () => {
-  //     loadAllState = true
-  //   }
-  // }, [window.location.hash])
+
   const search = async (more?: boolean) => {
     if (more) {
       query.offset++

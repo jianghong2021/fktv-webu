@@ -11,7 +11,7 @@ export default function (opt:{search:(m?:boolean)=>void,setQueryType:(t:number)=
             value: 1004,
         }
     ]
-    let lastQuery = ''
+  
     const onChange = (s:string)=>{
         if(!s){
             return
