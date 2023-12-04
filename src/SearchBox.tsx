@@ -1,4 +1,3 @@
-import { KeyboardEventHandler } from 'react'
 import './assets/search.css'
 import searchImg from './assets/search.png'
 export default function (opt:{search:(m?:boolean)=>void,setQueryType:(t:number)=>void,setQueryKeywords:(s:string)=>void}) {
