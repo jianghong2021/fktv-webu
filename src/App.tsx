@@ -59,7 +59,7 @@ function App() {
 
     setQuery(query)
     setLoading(true)
-    const res = await MusicApi.search(query).catch((e) => {
+    const res = await MusicApi.search(query).catch(() => {
       showNotice('搜索失败，请稍后再试')
     })
     setLoading(false)
