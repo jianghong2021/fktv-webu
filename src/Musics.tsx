@@ -2,7 +2,8 @@ import MusicApi from "./service/music";
 import PlayerClient from "./service/player-client";
 import { SEARCH_TYPE } from "./utils/com";
 import './assets/music.css'
-
+import videoImg from './assets/video.svg'
+import addImg from './assets/add.svg'
 // eslint-disable-next-line react-refresh/only-export-components
 export default function (arg: { mType: SEARCH_TYPE, mvCount: number, musics: MusicMvMeta[], search: (m?: boolean) => void, setLoading: (a: boolean) => void, showNotice: (t: string) => void }) {
     const { mType, mvCount, musics, search, setLoading, showNotice } = arg
@@ -65,11 +66,11 @@ export default function (arg: { mType: SEARCH_TYPE, mvCount: number, musics: Mus
                     <p className="name">{getNames(m.artists).join('/')}</p>
                     <p className="time">
                         <span>{timeFormat(m.duration)}</span>
-                        {m.mvid ? <img src="/video.svg" alt="mv" /> : null}
+                        {m.mvid ? <img src={videoImg} alt="mv" /> : null}
                     </p>
                 </div>
                 <div className="contr">
-                    <img src="/add.svg" alt="add" onClick={() => addMusic(m, false)} />
+                    <img src={addImg} alt="add" onClick={() => addMusic(m, false)} />
                 </div>
             </div>)}
             {musics.length == 0 ? <p className="empty-block">什么也没有</p> : null}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PlayerClient from "./service/player-client";
-
+import videoImg from './assets/video.svg'
+import deleteImg from './assets/delete.png'
 export default function (opt: { setLoading: (l: boolean) => void, showNotice: (t: string) => void }) {
     let doing = false
     const { showNotice } = opt
@@ -73,10 +74,10 @@ export default function (opt: { setLoading: (l: boolean) => void, showNotice: (t
         <div className={(!showList ? 'my-list-hide' : '') + ' my-list'}>
             {list.map(m => <div key={m.id}>
                 <div className="my-list-item">
-                    {m.isVideo ? <img src="/video.svg" alt="video" /> : null}
+                    {m.isVideo ? <img src={videoImg} alt="video" /> : null}
                     <span>{m.name}</span>
                 </div>
-                <img src="/delete.png" alt="delete" onClick={() => removeSong(m)} />
+                <img src={deleteImg} alt="delete" onClick={() => removeSong(m)} />
             </div>)}
 
         </div>
