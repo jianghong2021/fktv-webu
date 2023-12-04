@@ -14,6 +14,10 @@ interface MusicMvMeta {
     url: string
     mvid?: number
     isVideo: boolean
+    freeTrialInfo: {
+        start: number|null
+        end: number|null
+    }
 }
 
 interface MvAllQuery {

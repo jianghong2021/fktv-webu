@@ -14,10 +14,6 @@ export default function (opt:{search:(m?:boolean)=>void,setQueryType:(t:number)=
     ]
   
     const onChange = (s:string)=>{
-        if(!s){
-            return
-        }
-        
         setQueryKeywords(s)
     }
 

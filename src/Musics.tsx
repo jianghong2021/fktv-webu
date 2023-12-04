@@ -13,35 +13,36 @@ export default function (arg: { mType: SEARCH_TYPE, mvCount: number, musics: Mus
     }
     const addMusic = async (m: MusicMvMeta, mv = true) => {
         setLoading(true)
-        try {
-            // 单曲
-            if (mv===false) {
+        // 单曲
+        if (mv === false) {
 
-                const res = await MusicApi.getSongsUrl(m.id)
-                if (res && res.data[0]) {
-                    m.cover = m.cover?m.cover:''
-                    m.url = res.data[0].url
-                    m.isVideo = mv
-                    await PlayerClient.addMusic(m)
-                    showNotice('添加成功')
-                } else {
-                    showNotice('无可用资源')
+            const res = await MusicApi.getSongsUrl(m.id)
+            if (res && res.data[0]) {
+                const music = res.data[0];
+                if (music.freeTrialInfo&&music.freeTrialInfo.end != null) {
+                    showNotice('该歌曲为试听歌曲')
+                    setLoading(false)
+                    return
                 }
+                m.cover = ''
+                m.url = music.url
+                m.isVideo = mv
+                await PlayerClient.addMusic(m)
+                showNotice('添加成功')
             } else {
-                const res = await MusicApi.getUrl(m.id)
-                if (res) {
-                    m.cover = m.cover?m.cover:''
-                    m.isVideo = mv
-                    m.url = res.data.url
-                    await PlayerClient.addMusic(m)
-                    showNotice('添加成功')
-                } else {
-                    showNotice('无可用资源')
-                }
+                showNotice('无可用资源')
             }
-
-        } catch (error) {
-            showNotice('添加失败，请稍后再试')
+        } else {
+            const res = await MusicApi.getUrl(m.id)
+            if (res) {
+                m.cover = m.cover ? m.cover : ''
+                m.isVideo = mv
+                m.url = res.data.url
+                await PlayerClient.addMusic(m)
+                showNotice('添加成功')
+            } else {
+                showNotice('无可用资源')
+            }
         }
         setLoading(false)
     }

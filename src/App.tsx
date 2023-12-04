@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './App.css'
 import SearchBox from './SearchBox'
@@ -16,7 +16,7 @@ function App() {
   const [mvCount, setmvCount] = useState(0)
 
   const [query, setQuery] = useState({
-    keywords: '刘德华',
+    keywords: '老歌',
     type: SEARCH_TYPE.Single,
     limit: 30,
     offset: 1
@@ -35,8 +35,20 @@ function App() {
       })
     }, 1500)
   }
-
+  // 首次搜索
+  let init = false
+  useEffect(()=>{
+    if(init){
+      return
+    }
+    search(false)
+    init = true
+  },[query])
   const search = async (more?: boolean) => {
+    if(query.keywords.length == 0){
+      showNotice('请输入关键字')
+      return
+    }
     if (more) {
       query.offset++
     } else {
@@ -49,7 +61,6 @@ function App() {
     setLoading(true)
     const res = await MusicApi.search(query).catch((e) => {
       showNotice('搜索失败，请稍后再试')
-      console.log(e)
     })
     setLoading(false)
     if (!res) {
