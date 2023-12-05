@@ -74,10 +74,10 @@ export default function (opt: { setLoading: (l: boolean) => void, showNotice: (t
         <div className={(!showList ? 'my-list-hide' : '') + ' my-list'}>
             {list.map(m => <div key={m.id}>
                 <div className="my-list-item">
-                    {m.isVideo ? <img src={videoImg} alt="video" /> : null}
-                    <span>{m.name}</span>
+                    {m.isVideo ? <img className="controller-img-icon" src={videoImg} alt="video" /> : null}
+                    <p>{m.name}</p>
                 </div>
-                <img src={deleteImg} alt="delete" onClick={() => removeSong(m)} />
+                <img className="controller-img-icon" src={deleteImg} alt="delete" onClick={() => removeSong(m)} />
             </div>)}
 
         </div>
